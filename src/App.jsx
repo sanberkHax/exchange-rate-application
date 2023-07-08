@@ -1,22 +1,18 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from '@/pages/Home';
-import { Login } from '@/pages/Login';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-]);
+import { Suspense } from 'react';
+import { Outlet } from 'react-router';
 
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <Suspense
+        fallback={
+          <div className="h-full w-full flex items-center justify-center">
+            <p>Loading...</p>
+          </div>
+        }
+      >
+        <Outlet />
+      </Suspense>
     </>
   );
 }

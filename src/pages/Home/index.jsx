@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-export const Home = () => {
+const Home = () => {
   const user = false;
   return (
     <>
@@ -14,3 +14,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;

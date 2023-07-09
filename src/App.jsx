@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { ErrorBoundary } from 'react-error-boundary';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           }
         >
           <Outlet />
+          <ToastContainer />
         </Suspense>
       </ErrorBoundary>
     </>

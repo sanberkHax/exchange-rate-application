@@ -4,7 +4,8 @@ import { Input } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { storage } from '@/utils/storage';
+import { useContext } from 'react';
+import { AuthContext } from '../store/AuthContext';
 
 const InputWithError = fieldRenderProps => {
   const { validationMessage, visited, ...others } = fieldRenderProps;
@@ -18,6 +19,8 @@ const InputWithError = fieldRenderProps => {
 
 export const LoginForm = () => {
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async () => {
     // const { data } = await axios.post(
@@ -38,7 +41,7 @@ export const LoginForm = () => {
     //   body: JSON.stringify({ grant_type: 'password', ...values }),
     // });
 
-    storage.setToken('dummy_token');
+    login();
 
     toast.success('Login succesfull');
 

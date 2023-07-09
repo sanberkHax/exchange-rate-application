@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from '@/App.jsx';
+import '@progress/kendo-theme-default/dist/all.css';
 import '@/index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';

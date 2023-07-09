@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
+import { Layout } from './components/Layout';
 
 function App() {
   return (
@@ -31,8 +32,16 @@ function App() {
             </div>
           }
         >
-          <Outlet />
-          <ToastContainer />
+          <Layout>
+            <Outlet />
+          </Layout>
+          <ToastContainer
+            position="top-left"
+            pauseOnFocusLoss={false}
+            autoClose={2000}
+            hideProgressBar
+            pauseOnHover={false}
+          />
         </Suspense>
       </ErrorBoundary>
     </>

@@ -2,6 +2,9 @@ import { Form, Field, FormElement } from '@progress/kendo-react-form';
 import { Error } from '@progress/kendo-react-labels';
 import { Input } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { storage } from '@/utils/storage';
 
 const InputWithError = fieldRenderProps => {
   const { validationMessage, visited, ...others } = fieldRenderProps;
@@ -14,7 +17,33 @@ const InputWithError = fieldRenderProps => {
 };
 
 export const LoginForm = () => {
-  const handleSubmit = dataItem => console.log(dataItem);
+  const navigate = useNavigate();
+
+  const handleSubmit = async values => {
+    // const { data } = await axios.post(
+    //   'token',
+    //   { grant_type: 'password', ...values },
+    //   {
+    //     headers: {
+    //       'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //   },
+    // );
+    // const data = await fetch('https://test.nakitakisimiz.com/wapi/token', {
+    //   method: 'POST',
+    //   mode: 'no-cors',
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //   },
+    //   body: JSON.stringify({ grant_type: 'password', ...values }),
+    // });
+
+    storage.setToken('dummy_token');
+
+    toast.success('Login succesfull');
+
+    navigate('/');
+  };
 
   const usernameValidator = value => (value ? '' : 'Please enter a username.');
   const passwordValidator = value => (value ? '' : 'Please enter a password.');
@@ -25,7 +54,7 @@ export const LoginForm = () => {
       value: 'webapi@demosirketi',
     });
     formRenderProps.onChange('password', {
-      value: 'Magnimore123',
+      value: 'Magnimore123.',
     });
   };
 

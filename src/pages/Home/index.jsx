@@ -1,10 +1,11 @@
 import { Navigate } from 'react-router-dom';
+import { storage } from '@/utils/storage';
 
 const Home = () => {
-  const user = false;
+  const token = storage.getToken();
   return (
     <>
-      {user ? (
+      {token ? (
         <div>
           <h1>Home</h1>
         </div>

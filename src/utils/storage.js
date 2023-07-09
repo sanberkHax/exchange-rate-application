@@ -1,4 +1,4 @@
-const storage = {
+export const storage = {
   getToken: () => {
     return JSON.parse(window.localStorage.getItem('token'));
   },
@@ -9,5 +9,3 @@ const storage = {
     window.localStorage.removeItem('token');
   },
 };
-
-export default storage;

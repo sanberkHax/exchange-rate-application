@@ -1,16 +1,15 @@
 import { Button } from '@progress/kendo-react-buttons';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../store/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 export const Header = () => {
   const navigate = useNavigate();
 
-  const { logout } = useContext(AuthContext);
+  const auth = useAuth();
 
   const handleLogout = () => {
-    logout();
+    auth.logout();
     navigate('/login');
   };
 

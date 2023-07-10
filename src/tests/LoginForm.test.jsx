@@ -34,7 +34,7 @@ describe('LoginForm', () => {
 
     const user = userEvent.setup();
 
-    const fillButton = screen.getByText(/Fill Test Credentials/i);
+    const fillButton = screen.getByText(/Click to auto fill/i);
 
     await user.click(fillButton);
 

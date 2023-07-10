@@ -2,6 +2,7 @@ import { ExchangeRateDataGrid } from '@/components/ExchangeRateDataGrid';
 import { ExchangeRateCalculator } from '@/components/ExchangeRateCalculator';
 import { useFakeFetch } from '../../hooks/useFetch';
 import { Loader } from '@progress/kendo-react-indicators';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
   const { data, error, loading } = useFakeFetch();
@@ -24,16 +25,22 @@ const Home = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center text-center">
-      <h1 className="text-black font-bold text-3xl">Exchange Rates</h1>
-      <div className="h-[300px]">
-        {data && <ExchangeRateDataGrid exchangeRates={data} />}
+    <>
+      <Helmet>
+        <title>Exchange Rate Application</title>
+        <meta name="description" content="Exchange Rate Application" />
+      </Helmet>
+      <div className="flex flex-col gap-4 justify-center items-center text-center">
+        <h1 className="text-black font-bold text-3xl">Exchange Rates</h1>
+        <div className="h-[300px]">
+          {data && <ExchangeRateDataGrid exchangeRates={data} />}
+        </div>
+        <h1 className="text-black font-bold text-3xl">
+          Exchange Rate Calculator
+        </h1>
+        {data && <ExchangeRateCalculator exchangeRates={data} />}
       </div>
-      <h1 className="text-black font-bold text-3xl">
-        Exchange Rate Calculator
-      </h1>
-      {data && <ExchangeRateCalculator exchangeRates={data} />}
-    </div>
+    </>
   );
 };
 

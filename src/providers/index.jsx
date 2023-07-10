@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from '@/store/AuthContext';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { Loader } from '@progress/kendo-react-indicators';
+import { HelmetProvider } from 'react-helmet-async';
 
 export const AppProviders = ({ children }) => {
   return (
@@ -19,7 +20,9 @@ export const AppProviders = ({ children }) => {
         }
       >
         <AuthProvider>
-          <BrowserRouter>{children}</BrowserRouter>
+          <HelmetProvider>
+            <BrowserRouter>{children}</BrowserRouter>
+          </HelmetProvider>
         </AuthProvider>
       </Suspense>
     </ErrorBoundary>

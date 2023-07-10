@@ -65,6 +65,7 @@ export const LoginForm = () => {
             </Button>
             <Field
               name={'username'}
+              autoComplete="username"
               validator={usernameValidator}
               component={InputWithError}
               label={'Username'}
@@ -73,6 +74,7 @@ export const LoginForm = () => {
             <Field
               name={'password'}
               type="password"
+              autoComplete="current-password"
               validator={passwordValidator}
               component={InputWithError}
               label={'Password'}

@@ -4,10 +4,16 @@ import { cloneElement, useMemo, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { Button } from '@progress/kendo-react-buttons';
 import { currencyToCountry } from '@/utils/currencyToCountry';
+import { formatNumber } from '@progress/kendo-intl';
 
 export const ExchangeRateCalculator = ({ exchangeRates }) => {
   const currencyNames = useMemo(
     () => [...exchangeRates.map(item => item.nameEn), 'TRY'],
+    [exchangeRates],
+  );
+
+  const currencyList = useMemo(
+    () => [...exchangeRates, { currencyId: 0, midRate: 1.0, nameEn: 'TRY' }],
     [exchangeRates],
   );
 
@@ -16,8 +22,29 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
     from: 'TRY',
   });
 
+  const [amount, setAmount] = useState(1);
+
+  const [result, setResult] = useState('');
+
   const handleChange = (e, type) => {
     setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
+  };
+
+  const calculateExchangeRates = () => {
+    const fromRate = currencyList.find(
+      item => currencyValues.from === item.nameEn,
+    );
+
+    const toRate = currencyList.find(item => currencyValues.to === item.nameEn);
+
+    const convertedRate = (amount * fromRate.midRate) / toRate.midRate;
+
+    setResult(
+      `${formatNumber(amount, 'n2')} ${fromRate.nameEn} equals ${formatNumber(
+        convertedRate,
+        'n2',
+      )} ${toRate.nameEn}`,
+    );
   };
 
   const itemRender = (li, itemProps) => {
@@ -57,6 +84,8 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
             defaultValue={1}
             format="n2"
             min={1}
+            onChange={e => setAmount(e.value)}
+            value={amount}
             style={{
               width: '200px',
             }}
@@ -102,7 +131,10 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
           />
         </div>
       </div>
-      <Button themeColor="info">Calculate</Button>
+      <p>{result}</p>
+      <Button themeColor="info" onClick={calculateExchangeRates}>
+        Calculate
+      </Button>
     </div>
   );
 };

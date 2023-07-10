@@ -22,10 +22,7 @@ export const Header = () => {
         Exchange Rate Application
       </Link>
 
-      <Button
-        className="bg-slate-600 text-white hover:bg-slate-700"
-        onClick={handleLogout}
-      >
+      <Button themeColor="info" onClick={handleLogout}>
         Logout
       </Button>
     </header>

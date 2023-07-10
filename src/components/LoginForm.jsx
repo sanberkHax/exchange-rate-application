@@ -65,9 +65,10 @@ export const LoginForm = () => {
           >
             <Button
               onClick={e => handleAutoFill(e, formRenderProps)}
-              className="bg-slate-600 text-white hover:bg-slate-700 w-40 mx-auto"
+              themeColor="tertiary"
+              className=" w-30 mx-auto"
             >
-              Fill Test Credentials
+              Click to Auto Fill
             </Button>
             <Field
               name={'username'}
@@ -86,11 +87,7 @@ export const LoginForm = () => {
               maxLength={18}
             />
             <div className="flex justify-center flex-col gap-2">
-              <Button
-                type={'submit'}
-                disabled={!formRenderProps.allowSubmit}
-                className="bg-slate-600 text-white hover:bg-slate-700"
-              >
+              <Button themeColor="info" disabled={!formRenderProps.allowSubmit}>
                 Login
               </Button>
             </div>

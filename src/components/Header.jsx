@@ -14,7 +14,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="w-full flex justify-between p-10">
+    <header className="w-full flex justify-between p-4 sm:p-10">
       <Link
         to="/"
         className="text-black text-center font-bold sm:text-xl cursor-pointer"

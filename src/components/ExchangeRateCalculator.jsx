@@ -121,7 +121,6 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
               to: prevValues.from,
               from: prevValues.to,
             }));
-            calculateExchangeRates();
           }}
         >
           Switch

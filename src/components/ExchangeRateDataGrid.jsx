@@ -19,20 +19,16 @@ export const ExchangeRateDataGrid = () => {
       onDataStateChange={onDataStateChange}
       {...dataState}
       sortable={true}
+      scrollable="none"
       total={EXCHANGE_RATES.length}
     >
-      <Column
-        field="currencyId"
-        title="Currency ID"
-        filterable={false}
-        width="100px"
-      />
-      <Column field="nameEn" title="Currency Name" width="240px" />
+      <Column field="currencyId" title="Currency ID" width={130} />
+      <Column field="nameEn" title="Currency Name" width={130} />
       <Column
         field="midRate"
         title="Rate"
         filterable={false}
-        width="180px"
+        width={80}
         filter="numeric"
         format="{0:c}"
       />

@@ -89,7 +89,13 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
             defaultValue={1}
             format="n2"
             min={1}
-            onChange={e => setAmount(e.value)}
+            onChange={e => {
+              if (!e.value) {
+                setAmount(1);
+              } else {
+                setAmount(e.value);
+              }
+            }}
             value={amount}
             style={{
               width: '200px',

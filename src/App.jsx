@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 
 import { ProtectedRoute } from '@/routes/ProtectedRoute';
@@ -14,13 +14,16 @@ const App = () => {
   const auth = useAuth();
   const token = storage.getToken();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (token) {
-      auth.login();
+      auth.setUser(token);
+      navigate('/');
     } else {
       auth.logout();
     }
-  }, [token, auth]);
+  }, [token, auth, navigate]);
 
   return (
     <Routes>

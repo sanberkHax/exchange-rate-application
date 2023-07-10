@@ -8,7 +8,7 @@ export const Layout = () => {
 
   return (
     <>
-      {auth.isLoggedIn && <Header />}
+      {auth.user && <Header />}
       <main className="min-h-[calc(100vh-110px)] flex flex-col items-center p-4 sm:p-10 gap-10">
         <Outlet />
       </main>

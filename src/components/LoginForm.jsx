@@ -2,8 +2,6 @@ import { Form, Field, FormElement } from '@progress/kendo-react-form';
 import { Error } from '@progress/kendo-react-labels';
 import { Input } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useAuth } from '@/hooks/useAuth';
 
 const InputWithError = fieldRenderProps => {
@@ -17,11 +15,9 @@ const InputWithError = fieldRenderProps => {
 };
 
 export const LoginForm = () => {
-  const navigate = useNavigate();
-
   const auth = useAuth();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async values => {
     // const { data } = await axios.post(
     //   'token',
     //   { grant_type: 'password', ...values },
@@ -31,12 +27,7 @@ export const LoginForm = () => {
     //     },
     //   },
     // );
-
-    auth.login();
-
-    toast.success('Login succesfull');
-
-    navigate('/');
+    auth.login(values);
   };
 
   const usernameValidator = value => (value ? '' : 'Please enter a username.');
@@ -87,7 +78,10 @@ export const LoginForm = () => {
               maxLength={18}
             />
             <div className="flex justify-center flex-col gap-2">
-              <Button themeColor="info" disabled={!formRenderProps.allowSubmit}>
+              <Button
+                themeColor="info"
+                disabled={!formRenderProps.allowSubmit || auth.loading}
+              >
                 Login
               </Button>
             </div>

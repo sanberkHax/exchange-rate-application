@@ -1,16 +1,18 @@
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { process } from '@progress/kendo-data-query';
 import { useCallback, useState } from 'react';
-import { EXCHANGE_RATES } from '@/constants/DummyResponse';
 
-export const ExchangeRateDataGrid = () => {
+export const ExchangeRateDataGrid = ({ exchangeRates }) => {
   const [dataState, setDataState] = useState();
-  const [resultState, setResultState] = useState(process(EXCHANGE_RATES, {}));
+  const [resultState, setResultState] = useState(process(exchangeRates, {}));
 
-  const onDataStateChange = useCallback(e => {
-    setDataState(e.dataState);
-    setResultState(process(EXCHANGE_RATES, e.dataState));
-  }, []);
+  const onDataStateChange = useCallback(
+    e => {
+      setDataState(e.dataState);
+      setResultState(process(exchangeRates, e.dataState));
+    },
+    [exchangeRates],
+  );
 
   return (
     <Grid
@@ -20,7 +22,7 @@ export const ExchangeRateDataGrid = () => {
       {...dataState}
       sortable={true}
       scrollable="none"
-      total={EXCHANGE_RATES.length}
+      total={exchangeRates?.length}
     >
       <Column field="currencyId" title="Currency ID" width={130} />
       <Column field="nameEn" title="Currency Name" width={130} />

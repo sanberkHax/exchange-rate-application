@@ -1,16 +1,32 @@
 import { ComboBox } from '@progress/kendo-react-dropdowns';
 import { NumericTextBox } from '@progress/kendo-react-inputs';
-import { cloneElement, useState } from 'react';
+import { cloneElement, useMemo, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { Button } from '@progress/kendo-react-buttons';
+import { currencyToCountry } from '@/utils/currencyToCountry';
 
-const countries = ['USD', 'EUR', 'TRY'];
+export const ExchangeRateCalculator = ({ exchangeRates }) => {
+  const currencyNames = useMemo(
+    () => [...exchangeRates.map(item => item.nameEn), 'TRY'],
+    [exchangeRates],
+  );
 
-export const ExchangeRateCalculator = () => {
-  const itemRender = li => {
+  const [currencyValues, setCurrencyValues] = useState({
+    to: 'USD',
+    from: 'TRY',
+  });
+
+  const handleChange = (e, type) => {
+    setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
+  };
+
+  const itemRender = (li, itemProps) => {
     const itemChildren = (
       <div className="flex gap-4 items-center">
-        <ReactCountryFlag countryCode="US" svg />
+        <ReactCountryFlag
+          countryCode={currencyToCountry[itemProps.dataItem]}
+          svg
+        />
         {li.props.children}
       </div>
     );
@@ -23,19 +39,13 @@ export const ExchangeRateCalculator = () => {
     }
     return (
       <div className="flex gap-2 items-center px-2">
-        <ReactCountryFlag countryCode="US" svg />
+        <ReactCountryFlag
+          countryCode={currencyToCountry[element.props.value]}
+          svg
+        />
         {element}
       </div>
     );
-  };
-
-  const [currencyValues, setCurrencyValues] = useState({
-    to: 'USD',
-    from: 'TRY',
-  });
-
-  const handleChange = (e, type) => {
-    setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
   };
 
   return (
@@ -56,7 +66,7 @@ export const ExchangeRateCalculator = () => {
           <h2 className="font-bold">From</h2>
           <ComboBox
             clearButton={false}
-            data={countries}
+            data={currencyNames}
             itemRender={itemRender}
             valueRender={valueRender}
             value={currencyValues.from}
@@ -81,7 +91,7 @@ export const ExchangeRateCalculator = () => {
           <h2 className="font-bold">To</h2>
           <ComboBox
             clearButton={false}
-            data={countries}
+            data={currencyNames}
             itemRender={itemRender}
             valueRender={valueRender}
             value={currencyValues.to}

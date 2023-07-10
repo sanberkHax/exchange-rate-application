@@ -8,17 +8,17 @@ export const Layout = () => {
 
   return (
     <>
-      <main className="h-screen flex flex-col items-center justify-center">
-        {auth.isLoggedIn && <Header />}
+      {auth.isLoggedIn && <Header />}
+      <main className="min-h-[calc(100vh-110px)] flex flex-col items-center p-4 sm:p-10 gap-10">
         <Outlet />
-        <ToastContainer
-          position="top-left"
-          pauseOnFocusLoss={false}
-          autoClose={2000}
-          hideProgressBar
-          pauseOnHover={false}
-        />
       </main>
+      <ToastContainer
+        position="top-left"
+        pauseOnFocusLoss={false}
+        autoClose={2000}
+        hideProgressBar
+        pauseOnHover={false}
+      />
     </>
   );
 };

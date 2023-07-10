@@ -14,8 +14,11 @@ export const Header = () => {
   };
 
   return (
-    <header className="w-full flex justify-between p-10 fixed top-0">
-      <Link to="/" className="text-black font-bold text-xl cursor-pointer">
+    <header className="w-full flex justify-between p-10">
+      <Link
+        to="/"
+        className="text-black text-center font-bold sm:text-xl cursor-pointer"
+      >
         Exchange Rate Application
       </Link>
 

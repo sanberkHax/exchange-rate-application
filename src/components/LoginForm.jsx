@@ -35,6 +35,7 @@ export const LoginForm = () => {
 
   const handleAutoFill = (e, formRenderProps) => {
     e.preventDefault();
+
     formRenderProps.onChange('username', {
       value: 'webapi@demosirketi',
     });
@@ -58,6 +59,7 @@ export const LoginForm = () => {
               onClick={e => handleAutoFill(e, formRenderProps)}
               themeColor="tertiary"
               className=" w-30 mx-auto"
+              disabled={!formRenderProps.allowSubmit || auth.loading}
             >
               Click to Auto Fill
             </Button>

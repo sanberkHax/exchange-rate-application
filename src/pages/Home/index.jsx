@@ -24,7 +24,7 @@ const Home = () => {
   }
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center text-center">
+    <div className="flex flex-col gap-4 justify-center items-center text-center">
       <h1 className="text-black font-bold text-3xl">Exchange Rates</h1>
       <div className="h-[300px]">
         {data && <ExchangeRateDataGrid exchangeRates={data} />}

@@ -80,14 +80,10 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
     }
   }, [currencyValues, conversion, calculateExchangeRates]);
 
-  const result = `${formatNumber(amount, 'n2')} ${
-    currencyValues.from
-  } equals ${formatNumber(conversion, 'n2')} ${currencyValues.to}`;
-
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
-      <div className="flex-col md:flex-row flex gap-4 sm:items-end justify-center">
-        <div className="flex flex-col gap-4">
+      <div className="flex-col md:flex-row flex gap-4 md:items-end justify-center">
+        <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">Amount</h2>
           <NumericTextBox
             defaultValue={1}
@@ -100,7 +96,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
             }}
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">From</h2>
           <ComboBox
             clearButton={false}
@@ -125,7 +121,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
         >
           Switch
         </Button>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">To</h2>
           <ComboBox
             clearButton={false}
@@ -140,10 +136,21 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           />
         </div>
       </div>
-      {conversion && <p>{result}</p>}
-      <Button themeColor="info" onClick={calculateExchangeRates}>
-        Calculate
-      </Button>
+      {conversion ? (
+        <div className="flex gap-10 justify-center items-center">
+          <p className="font-bold text-2xl">
+            {formatNumber(amount, 'n2')} {currencyValues.from}
+          </p>
+          <p className="font-bold text-xl">=</p>
+          <p className="font-bold text-2xl">
+            {formatNumber(conversion, 'n2')} {currencyValues.to}
+          </p>
+        </div>
+      ) : (
+        <Button themeColor="info" onClick={calculateExchangeRates}>
+          Calculate
+        </Button>
+      )}
     </div>
   );
 };

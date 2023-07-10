@@ -12,6 +12,7 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const App = () => {
   const auth = useAuth();
+
   const token = storage.getToken();
 
   const navigate = useNavigate();

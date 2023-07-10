@@ -6,7 +6,7 @@ import { Button } from '@progress/kendo-react-buttons';
 import { currencyToCountry } from '@/utils/currencyToCountry';
 import { formatNumber } from '@progress/kendo-intl';
 
-export const ExchangeRateCalculator = ({ exchangeRates }) => {
+export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
   const [amount, setAmount] = useState(1);
 
   const [conversion, setConversion] = useState();
@@ -48,6 +48,7 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
     const itemChildren = (
       <div className="flex gap-4 items-center">
         <ReactCountryFlag
+          title={currencyToCountry[itemProps.dataItem]}
           countryCode={currencyToCountry[itemProps.dataItem]}
           svg
         />
@@ -64,6 +65,7 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
     return (
       <div className="flex gap-2 items-center px-2">
         <ReactCountryFlag
+          title={currencyToCountry[element.props.value]}
           countryCode={currencyToCountry[element.props.value]}
           svg
         />

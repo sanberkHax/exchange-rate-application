@@ -1,12 +1,21 @@
 import { ComboBox } from '@progress/kendo-react-dropdowns';
 import { NumericTextBox } from '@progress/kendo-react-inputs';
-import { cloneElement, useMemo, useState } from 'react';
+import { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { Button } from '@progress/kendo-react-buttons';
 import { currencyToCountry } from '@/utils/currencyToCountry';
 import { formatNumber } from '@progress/kendo-intl';
 
 export const ExchangeRateCalculator = ({ exchangeRates }) => {
+  const [amount, setAmount] = useState(1);
+
+  const [conversion, setConversion] = useState();
+
+  const [currencyValues, setCurrencyValues] = useState({
+    to: 'USD',
+    from: 'TRY',
+  });
+
   const currencyNames = useMemo(
     () => [...exchangeRates.map(item => item.nameEn), 'TRY'],
     [exchangeRates],
@@ -17,35 +26,23 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
     [exchangeRates],
   );
 
-  const [currencyValues, setCurrencyValues] = useState({
-    to: 'USD',
-    from: 'TRY',
-  });
-
-  const [amount, setAmount] = useState(1);
-
-  const [result, setResult] = useState('');
-
   const handleChange = (e, type) => {
     setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
   };
 
-  const calculateExchangeRates = () => {
+  const calculateExchangeRates = useCallback(() => {
     const fromRate = currencyList.find(
       item => currencyValues.from === item.nameEn,
     );
 
     const toRate = currencyList.find(item => currencyValues.to === item.nameEn);
 
-    const convertedRate = (amount * fromRate.midRate) / toRate.midRate;
+    if (fromRate && toRate) {
+      const convertedRate = (amount * fromRate.midRate) / toRate.midRate;
 
-    setResult(
-      `${formatNumber(amount, 'n2')} ${fromRate.nameEn} equals ${formatNumber(
-        convertedRate,
-        'n2',
-      )} ${toRate.nameEn}`,
-    );
-  };
+      setConversion(convertedRate);
+    }
+  }, [currencyList, amount, currencyValues]);
 
   const itemRender = (li, itemProps) => {
     const itemChildren = (
@@ -74,6 +71,16 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
       </div>
     );
   };
+
+  useEffect(() => {
+    if (currencyValues && conversion) {
+      calculateExchangeRates();
+    }
+  }, [currencyValues, conversion, calculateExchangeRates]);
+
+  const result = `${formatNumber(amount, 'n2')} ${
+    currencyValues.from
+  } equals ${formatNumber(conversion, 'n2')} ${currencyValues.to}`;
 
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
@@ -112,6 +119,7 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
               to: prevValues.from,
               from: prevValues.to,
             }));
+            calculateExchangeRates();
           }}
         >
           Switch
@@ -131,7 +139,7 @@ export const ExchangeRateCalculator = ({ exchangeRates }) => {
           />
         </div>
       </div>
-      <p>{result}</p>
+      {conversion && <p>{result}</p>}
       <Button themeColor="info" onClick={calculateExchangeRates}>
         Calculate
       </Button>

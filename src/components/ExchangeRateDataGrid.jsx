@@ -3,7 +3,7 @@ import { process } from '@progress/kendo-data-query';
 import { useCallback, useState } from 'react';
 
 export const ExchangeRateDataGrid = ({ exchangeRates }) => {
-  const [dataState, setDataState] = useState();
+  const [dataState, setDataState] = useState({});
   const [resultState, setResultState] = useState(process(exchangeRates, {}));
 
   const onDataStateChange = useCallback(
@@ -22,7 +22,7 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
       {...dataState}
       sortable={true}
       scrollable="none"
-      total={exchangeRates?.length}
+      total={3}
     >
       <Column field="currencyId" title="Currency ID" width={130} />
       <Column field="nameEn" title="Currency Name" width={130} />

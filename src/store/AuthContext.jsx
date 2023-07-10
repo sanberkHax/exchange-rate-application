@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import { storage } from '@/utils/storage';
 import { toast } from 'react-toastify';
+import { authentication } from '@/api/authentication';
 
 export const AuthContext = createContext();
 
@@ -8,27 +9,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const authenticate = credentials => {
-    console.log(credentials);
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (
-          credentials.username !== 'webapi@demosirketi' ||
-          credentials.password !== 'Magnimore123.'
-        ) {
-          reject('Credentials are not valid');
-        } else {
-          resolve('dummy_token');
-        }
-      }, 1500);
-    });
-  };
-
   const login = async values => {
     try {
       setLoading(true);
 
-      const response = await authenticate(values);
+      const response = await authentication(values);
 
       if (response) {
         storage.setToken(response);

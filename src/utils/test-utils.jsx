@@ -8,7 +8,7 @@ function render(ui) {
     return (
       <AuthProvider>
         <MemoryRouter>{children}</MemoryRouter>
-        <ToastContainer autoClose={2000} />
+        <ToastContainer />
       </AuthProvider>
     );
   }

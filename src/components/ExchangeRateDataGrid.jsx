@@ -32,7 +32,7 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
         filterable={false}
         width={80}
         filter="numeric"
-        format="{0:c}"
+        // format="{0:c}"
       />
     </Grid>
   );

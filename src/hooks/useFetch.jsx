@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getExchangeRateList } from '@/api/getExchangeRateList';
 import { toast } from 'react-toastify';
 
-export const useFakeFetch = () => {
+export const useFetch = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

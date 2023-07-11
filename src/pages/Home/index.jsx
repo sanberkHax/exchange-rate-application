@@ -1,11 +1,11 @@
 import { ExchangeRateDataGrid } from './ExchangeRateDataGrid';
 import { ExchangeRateCalculator } from './ExchangeRateCalculator';
-import { useFakeFetch } from '@/hooks/useFetch';
+import { useFetch } from '@/hooks/useFetch';
 import { Loader } from '@progress/kendo-react-indicators';
 import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
-  const { data, error, loading } = useFakeFetch();
+  const { data, error, loading } = useFetch();
 
   if (error) {
     return (

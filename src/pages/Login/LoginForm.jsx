@@ -3,6 +3,7 @@ import { Error } from '@progress/kendo-react-labels';
 import { Input } from '@progress/kendo-react-inputs';
 import { Button } from '@progress/kendo-react-buttons';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const InputWithError = fieldRenderProps => {
   const { validationMessage, touched, ...others } = fieldRenderProps;
@@ -17,18 +18,11 @@ const InputWithError = fieldRenderProps => {
 
 export const LoginForm = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async values => {
-    // const { data } = await axios.post(
-    //   'token',
-    //   { grant_type: 'password', ...values },
-    //   {
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded',
-    //     },
-    //   },
-    // );
-    auth.login(values);
+    await auth.login(values);
+    navigate('/');
   };
 
   const usernameValidator = value => (value ? '' : 'Please enter a username.');

@@ -1,84 +1,61 @@
 import { ComboBox } from '@progress/kendo-react-dropdowns';
 import { NumericTextBox } from '@progress/kendo-react-inputs';
-import { cloneElement, useCallback, useEffect, useMemo, useState } from 'react';
-import ReactCountryFlag from 'react-country-flag';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@progress/kendo-react-buttons';
-import { currencyToCountry } from '@/utils/currencyToCountry';
-import { formatNumber } from '@progress/kendo-intl';
+import { CustomItem } from './CustomItem';
+import { CustomValue } from './CustomValue';
+import { CalculationResult } from './CalculationResult';
 
 export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
   const [amount, setAmount] = useState(1);
 
-  const [conversion, setConversion] = useState();
+  const [calculatedRate, setCalculatedRate] = useState(null);
 
   const [currencyValues, setCurrencyValues] = useState({
     to: 'USD',
     from: 'TRY',
   });
 
-  const currencyNames = useMemo(
-    () => [...exchangeRates.map(item => item.nameEn), 'TRY'],
+  const exchangeRateList = useMemo(
+    () => [...exchangeRates, { currencyId: 1, midRate: 1.0, nameEn: 'TRY' }],
     [exchangeRates],
   );
 
-  const currencyList = useMemo(
-    () => [...exchangeRates, { currencyId: 0, midRate: 1.0, nameEn: 'TRY' }],
-    [exchangeRates],
+  const currencyNames = useMemo(
+    () => exchangeRateList.map(item => item.nameEn),
+    [exchangeRateList],
   );
 
   const handleChange = (e, type) => {
+    // Change combobox values based on their type
     setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
   };
 
   const calculateExchangeRates = useCallback(() => {
-    const fromRate = currencyList.find(
+    // Find currency that matches with "from" combobox's value
+    const fromCurrency = exchangeRateList.find(
       item => currencyValues.from === item.nameEn,
     );
 
-    const toRate = currencyList.find(item => currencyValues.to === item.nameEn);
-
-    if (fromRate && toRate) {
-      const convertedRate = (amount * fromRate.midRate) / toRate.midRate;
-
-      setConversion(convertedRate);
-    }
-  }, [currencyList, amount, currencyValues]);
-
-  const itemRender = (li, itemProps) => {
-    const itemChildren = (
-      <div className="flex gap-4 items-center">
-        <ReactCountryFlag
-          title={currencyToCountry[itemProps.dataItem]}
-          countryCode={currencyToCountry[itemProps.dataItem]}
-          svg
-        />
-        {li.props.children}
-      </div>
+    // Find currency that matches with "to" combobox's value
+    const toCurrency = exchangeRateList.find(
+      item => currencyValues.to === item.nameEn,
     );
-    return cloneElement(li, li.props, itemChildren);
-  };
 
-  const valueRender = element => {
-    if (!element.props.value) {
-      return element;
+    // Calculate rate
+    if (fromCurrency && toCurrency) {
+      const result = (amount * fromCurrency.midRate) / toCurrency.midRate;
+
+      setCalculatedRate(result);
     }
-    return (
-      <div className="flex gap-2 items-center px-2">
-        <ReactCountryFlag
-          title={currencyToCountry[element.props.value]}
-          countryCode={currencyToCountry[element.props.value]}
-          svg
-        />
-        {element}
-      </div>
-    );
-  };
+  }, [exchangeRateList, amount, currencyValues]);
 
   useEffect(() => {
-    if (currencyValues && conversion) {
+    // Calculate exchange rates whenever any value changes
+    if (currencyValues && calculatedRate) {
       calculateExchangeRates();
     }
-  }, [currencyValues, conversion, calculateExchangeRates]);
+  }, [currencyValues, calculatedRate, calculateExchangeRates]);
 
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
@@ -107,8 +84,8 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           <ComboBox
             clearButton={false}
             data={currencyNames}
-            itemRender={itemRender}
-            valueRender={valueRender}
+            itemRender={CustomItem}
+            valueRender={CustomValue}
             value={currencyValues.from}
             onChange={e => handleChange(e, 'from')}
             style={{
@@ -132,8 +109,8 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           <ComboBox
             clearButton={false}
             data={currencyNames}
-            itemRender={itemRender}
-            valueRender={valueRender}
+            itemRender={CustomItem}
+            valueRender={CustomValue}
             value={currencyValues.to}
             onChange={e => handleChange(e, 'to')}
             style={{
@@ -142,16 +119,12 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           />
         </div>
       </div>
-      {conversion ? (
-        <div className="flex gap-10 justify-center items-center">
-          <p className="font-bold text-2xl text-primary">
-            {formatNumber(amount, 'n2')} {currencyValues.from}
-          </p>
-          <p className="font-bold text-xl">=</p>
-          <p className="font-bold text-2xl text-primary">
-            {formatNumber(conversion, 'n2')} {currencyValues.to}
-          </p>
-        </div>
+      {calculatedRate ? (
+        <CalculationResult
+          amount={amount}
+          currencyValues={currencyValues}
+          calculatedRate={calculatedRate}
+        />
       ) : (
         <Button themeColor="info" onClick={calculateExchangeRates}>
           Calculate

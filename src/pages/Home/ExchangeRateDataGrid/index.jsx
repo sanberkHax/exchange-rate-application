@@ -1,6 +1,7 @@
 import { Grid, GridColumn as Column } from '@progress/kendo-react-grid';
 import { process } from '@progress/kendo-data-query';
 import { useCallback, useState } from 'react';
+import { CustomHeader } from './CustomHeader';
 
 export const ExchangeRateDataGrid = ({ exchangeRates }) => {
   const [dataState, setDataState] = useState({});
@@ -14,14 +15,6 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
     [exchangeRates],
   );
 
-  const customHeader = props => {
-    return (
-      <a className="k-link" onClick={props.onClick}>
-        <b>{props.title}</b>
-        {props.children}
-      </a>
-    );
-  };
   return (
     <Grid
       data={{ data: resultState.data }}
@@ -36,13 +29,13 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
         field="currencyId"
         title="Currency ID"
         width={130}
-        headerCell={customHeader}
+        headerCell={CustomHeader}
       />
       <Column
         field="nameEn"
         title="Currency Name"
         width={130}
-        headerCell={customHeader}
+        headerCell={CustomHeader}
       />
       <Column
         field="midRate"
@@ -50,7 +43,7 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
         filterable={false}
         width={80}
         filter="numeric"
-        headerCell={customHeader}
+        headerCell={CustomHeader}
       />
     </Grid>
   );

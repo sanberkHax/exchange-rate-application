@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { storage } from '@/utils/storage';
 import { toast } from 'react-toastify';
 import { authentication } from '@/api/authentication';
@@ -9,6 +9,16 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const token = storage.getToken();
+
+  useEffect(() => {
+    if (token) {
+      setUser(token);
+    } else {
+      setUser(null);
+    }
+  }, [token]);
+
   const login = async values => {
     try {
       setLoading(true);
@@ -17,6 +27,9 @@ export const AuthProvider = ({ children }) => {
 
       if (response) {
         storage.setToken(response);
+
+        setUser(response);
+
         toast.success('Login succesfull');
       }
     } catch (err) {
@@ -32,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, setUser }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

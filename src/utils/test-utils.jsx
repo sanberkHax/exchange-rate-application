@@ -1,14 +1,15 @@
 import { render as rtlRender } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from '../store/AuthContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 function render(ui) {
   function Wrapper({ children }) {
     return (
       <AuthProvider>
-        <MemoryRouter>{children}</MemoryRouter>
-        <ToastContainer />
+        <HelmetProvider>
+          <MemoryRouter>{children}</MemoryRouter>
+        </HelmetProvider>
       </AuthProvider>
     );
   }

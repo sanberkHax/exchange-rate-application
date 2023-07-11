@@ -1,3 +1,5 @@
+// Fake authentication service with 1.5s delay
+
 export const authentication = credentials => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

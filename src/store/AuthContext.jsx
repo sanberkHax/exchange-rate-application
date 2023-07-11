@@ -3,7 +3,7 @@ import { storage } from '@/utils/storage';
 import { toast } from 'react-toastify';
 import { authentication } from '@/api/authentication';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

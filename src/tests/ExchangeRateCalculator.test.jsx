@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { render, screen } from '@/utils/test-utils';
 
-import { ExchangeRateCalculator } from '@/components/ExchangeRateCalculator';
+import { ExchangeRateCalculator } from '@/pages/Home/ExchangeRateCalculator';
 import userEvent from '@testing-library/user-event';
 import { EXCHANGE_RATES } from '@/constants/EXCHANGE_RATES';
 describe('ExchangeRateCalculator', () => {

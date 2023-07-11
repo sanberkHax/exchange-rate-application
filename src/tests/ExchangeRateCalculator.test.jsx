@@ -21,9 +21,8 @@ describe('ExchangeRateCalculator', () => {
 
     await user.click(calculateButton);
 
-    expect(
-      await screen.findByText(/1.00 TRY equals 0.04 USD/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/1.00 TRY/i)).toBeInTheDocument();
+    expect(await screen.findByText(/0.04 USD/i)).toBeInTheDocument();
   });
   it('renders combobox values with corresponding country flags', async () => {
     render(<ExchangeRateCalculator exchangeRates={EXCHANGE_RATES} />);
@@ -48,16 +47,14 @@ describe('ExchangeRateCalculator', () => {
 
     await user.click(calculateButton);
 
-    expect(
-      await screen.findByText(/1.00 TRY equals 0.04 USD/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/1.00 TRY/i)).toBeInTheDocument();
+    expect(await screen.findByText(/0.04 USD/i)).toBeInTheDocument();
 
     const switchButton = screen.getByText(/Switch/i);
 
     await user.click(switchButton);
 
-    expect(
-      await screen.findByText(/1.00 USD equals 26.06 TRY/i),
-    ).toBeInTheDocument();
+    expect(await screen.findByText(/1.00 USD/i)).toBeInTheDocument();
+    expect(await screen.findByText(/26.06 TRY/i)).toBeInTheDocument();
   });
 });

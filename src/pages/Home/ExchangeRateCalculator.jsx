@@ -144,11 +144,11 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
       </div>
       {conversion ? (
         <div className="flex gap-10 justify-center items-center">
-          <p className="font-bold text-2xl">
+          <p className="font-bold text-2xl text-primary">
             {formatNumber(amount, 'n2')} {currencyValues.from}
           </p>
           <p className="font-bold text-xl">=</p>
-          <p className="font-bold text-2xl">
+          <p className="font-bold text-2xl text-primary">
             {formatNumber(conversion, 'n2')} {currencyValues.to}
           </p>
         </div>

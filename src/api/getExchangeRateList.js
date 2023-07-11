@@ -1,4 +1,4 @@
-import { EXCHANGE_RATES } from '@/constants/DummyResponse';
+import { EXCHANGE_RATES } from '@/constants/EXCHANGE_RATES';
 
 export const getExchangeRateList = () =>
   new Promise(resolve => {

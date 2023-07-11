@@ -17,6 +17,7 @@ export const Layout = () => {
         pauseOnFocusLoss={false}
         autoClose={2000}
         hideProgressBar
+        theme="colored"
         pauseOnHover={false}
       />
     </>

@@ -5,11 +5,12 @@ import { Button } from '@progress/kendo-react-buttons';
 import { useAuth } from '@/hooks/useAuth';
 
 const InputWithError = fieldRenderProps => {
-  const { validationMessage, visited, ...others } = fieldRenderProps;
+  const { validationMessage, touched, ...others } = fieldRenderProps;
+
   return (
     <div>
       <Input {...others} />
-      {visited && validationMessage && <Error>{validationMessage}</Error>}
+      {touched && validationMessage && <Error>{validationMessage}</Error>}
     </div>
   );
 };

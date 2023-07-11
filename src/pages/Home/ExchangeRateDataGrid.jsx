@@ -14,6 +14,14 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
     [exchangeRates],
   );
 
+  const customHeader = props => {
+    return (
+      <a className="k-link" onClick={props.onClick}>
+        <b>{props.title}</b>
+        {props.children}
+      </a>
+    );
+  };
   return (
     <Grid
       data={{ data: resultState.data }}
@@ -24,15 +32,25 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
       scrollable="none"
       total={3}
     >
-      <Column field="currencyId" title="Currency ID" width={130} />
-      <Column field="nameEn" title="Currency Name" width={130} />
+      <Column
+        field="currencyId"
+        title="Currency ID"
+        width={130}
+        headerCell={customHeader}
+      />
+      <Column
+        field="nameEn"
+        title="Currency Name"
+        width={130}
+        headerCell={customHeader}
+      />
       <Column
         field="midRate"
         title="Rate"
         filterable={false}
         width={80}
         filter="numeric"
-        // format="{0:c}"
+        headerCell={customHeader}
       />
     </Grid>
   );

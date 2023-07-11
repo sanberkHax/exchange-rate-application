@@ -4,7 +4,7 @@ import { render, screen } from '@/utils/test-utils';
 
 import { ExchangeRateCalculator } from '@/components/ExchangeRateCalculator';
 import userEvent from '@testing-library/user-event';
-import { EXCHANGE_RATES } from '@/constants/DummyResponse';
+import { EXCHANGE_RATES } from '@/constants/EXCHANGE_RATES';
 describe('ExchangeRateCalculator', () => {
   it('renders properly', () => {
     render(<ExchangeRateCalculator exchangeRates={EXCHANGE_RATES} />);

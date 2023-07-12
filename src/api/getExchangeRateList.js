@@ -1,10 +1,7 @@
-import { EXCHANGE_RATES } from '@/constants/EXCHANGE_RATES';
+import api from '@/lib/axios';
 
-// Fake exchange rate service with 1.5s delay
+export const getExchangeRateList = async () => {
+  const response = await api.get('cmdtbl/dCompanyExchangeRate');
 
-export const getExchangeRateList = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve(EXCHANGE_RATES);
-    }, 1500);
-  });
+  return response;
+};

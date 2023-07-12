@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = storage.getToken();
+
     if (token) {
       setUser(token);
     }
@@ -23,9 +24,20 @@ export const AuthProvider = ({ children }) => {
       const response = await authentication(values);
 
       if (response) {
-        storage.setToken(response);
+        storage.setToken(response.access_token);
 
-        setUser(response);
+        const currentDate = new Date();
+
+        const expirationTimeInSeconds = response.expires_in;
+        const expirationTimeInMilliseconds = expirationTimeInSeconds * 1000;
+
+        const expirationDate = new Date(
+          currentDate.valueOf() + expirationTimeInMilliseconds,
+        );
+
+        storage.setExpirationDate(expirationDate);
+
+        setUser(response.access_token);
 
         toast.success('Login succesfull');
       }
@@ -39,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     storage.clearToken();
+    storage.clearExpirationDate();
   };
 
   return (

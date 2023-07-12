@@ -1,7 +1,7 @@
 export const EXCHANGE_RATES = [
-  { currencyId: 2, midRate: 26.0616, nameEn: 'USD' },
-  { currencyId: 3, midRate: 28.3626, nameEn: 'EUR' },
-  { currencyId: 14, midRate: 33.218, nameEn: 'GBP' },
-  { currencyId: 13, midRate: 3.8061, nameEn: 'DKK' },
-  { currencyId: 15, midRate: 29.0973, nameEn: 'CHF' },
+  { CurrencyId: 2, MidRate: 26.0616, NameEn: 'USD' },
+  { CurrencyId: 3, MidRate: 28.3626, NameEn: 'EUR' },
+  { CurrencyId: 14, MidRate: 33.218, NameEn: 'GBP' },
+  { CurrencyId: 13, MidRate: 3.8061, NameEn: 'DKK' },
+  { CurrencyId: 15, MidRate: 29.0973, NameEn: 'CHF' },
 ];

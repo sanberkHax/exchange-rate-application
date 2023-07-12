@@ -54,7 +54,7 @@ export const LoginForm = () => {
               onClick={e => handleAutoFill(e, formRenderProps)}
               themeColor="tertiary"
               className=" w-30 mx-auto"
-              disabled={!formRenderProps.allowSubmit || auth.loading}
+              disabled={auth.loading}
             >
               Click to Auto Fill
             </Button>

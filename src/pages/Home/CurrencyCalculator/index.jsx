@@ -5,9 +5,11 @@ import { Button } from '@progress/kendo-react-buttons';
 import { CustomItem } from './CustomItem';
 import { CustomValue } from './CustomValue';
 import { CalculationResult } from './CalculationResult';
+import { Error } from '@progress/kendo-react-labels';
 
 export const CurrencyCalculator = ({ exchangeRates = [] }) => {
   const [amount, setAmount] = useState(1);
+  const [amountInputTouched, setAmountInputTouched] = useState(false);
 
   const [calculatedRate, setCalculatedRate] = useState(null);
 
@@ -17,7 +19,7 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
   });
 
   const exchangeRateList = useMemo(
-    () => [...exchangeRates, { currencyId: 1, midRate: 1.0, nameEn: 'TRY' }],
+    () => [...exchangeRates, { CurrencyId: 1, MidRate: 1.0, NameEn: 'TRY' }],
     [exchangeRates],
   );
 
@@ -25,24 +27,24 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
     // Change combobox values based on their type
     setCurrencyValues(prevValues => ({
       ...prevValues,
-      [type]: e.value.nameEn,
+      [type]: e.value.NameEn,
     }));
   };
 
   const calculateCurrencies = useCallback(() => {
     // Find currency that matches with "from" combobox's value
     const fromCurrency = exchangeRateList.find(
-      item => currencyValues.from === item.nameEn,
+      item => currencyValues.from === item.NameEn,
     );
 
     // Find currency that matches with "to" combobox's value
     const toCurrency = exchangeRateList.find(
-      item => currencyValues.to === item.nameEn,
+      item => currencyValues.to === item.NameEn,
     );
 
     // Calculate rate
     if (fromCurrency && toCurrency) {
-      const result = (amount * fromCurrency.midRate) / toCurrency.midRate;
+      const result = (amount * fromCurrency.MidRate) / toCurrency.MidRate;
 
       setCalculatedRate(result);
     }
@@ -57,25 +59,28 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
 
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
-      <div className="flex-col md:flex-row flex gap-4 md:items-end justify-center">
+      <div className="flex-col md:flex-row flex gap-8 justify-center">
         <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">Amount</h2>
-          <NumericTextBox
-            defaultValue={1}
-            format="n2"
-            min={1}
-            onChange={e => {
-              if (!e.value) {
-                setAmount(1);
-              } else {
+          <div className="relative">
+            <NumericTextBox
+              valid={amount}
+              onFocus={() => setAmountInputTouched(true)}
+              defaultValue={1}
+              format="n2"
+              min={0}
+              onChange={e => {
                 setAmount(e.value);
-              }
-            }}
-            value={amount}
-            style={{
-              width: '200px',
-            }}
-          />
+              }}
+              value={amount}
+              style={{
+                width: '200px',
+              }}
+            />
+            {!amount && amountInputTouched && (
+              <Error className="absolute">Amount is invalid</Error>
+            )}
+          </div>
         </div>
         <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">From</h2>
@@ -99,6 +104,7 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
               from: prevValues.to,
             }));
           }}
+          className="mt-auto"
         >
           Switch
         </Button>
@@ -124,7 +130,11 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
           calculatedRate={calculatedRate}
         />
       ) : (
-        <Button themeColor="info" onClick={calculateCurrencies}>
+        <Button
+          themeColor="info"
+          onClick={calculateCurrencies}
+          disabled={!amount}
+        >
           Calculate
         </Button>
       )}

@@ -1,5 +1,5 @@
 import { ExchangeRateDataGrid } from './ExchangeRateDataGrid';
-import { ExchangeRateCalculator } from './ExchangeRateCalculator';
+import { CurrencyCalculator } from './CurrencyCalculator';
 import { useFetch } from '@/hooks/useFetch';
 import { Loader } from '@progress/kendo-react-indicators';
 import { Helmet } from 'react-helmet-async';
@@ -38,7 +38,7 @@ const Home = () => {
         <h1 className="text-secondary font-bold text-3xl">
           Exchange Rate Calculator
         </h1>
-        {data && <ExchangeRateCalculator exchangeRates={data} />}
+        {data && <CurrencyCalculator exchangeRates={data} />}
       </div>
     </>
   );

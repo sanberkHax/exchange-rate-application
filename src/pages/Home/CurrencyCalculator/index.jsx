@@ -6,7 +6,7 @@ import { CustomItem } from './CustomItem';
 import { CustomValue } from './CustomValue';
 import { CalculationResult } from './CalculationResult';
 
-export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
+export const CurrencyCalculator = ({ exchangeRates = [] }) => {
   const [amount, setAmount] = useState(1);
 
   const [calculatedRate, setCalculatedRate] = useState(null);
@@ -29,7 +29,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
     }));
   };
 
-  const calculateExchangeRates = useCallback(() => {
+  const calculateCurrencies = useCallback(() => {
     // Find currency that matches with "from" combobox's value
     const fromCurrency = exchangeRateList.find(
       item => currencyValues.from === item.nameEn,
@@ -51,9 +51,9 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
   useEffect(() => {
     // Calculate exchange rates whenever any value changes
     if (currencyValues && calculatedRate) {
-      calculateExchangeRates();
+      calculateCurrencies();
     }
-  }, [currencyValues, calculatedRate, calculateExchangeRates]);
+  }, [currencyValues, calculatedRate, calculateCurrencies]);
 
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
@@ -124,7 +124,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           calculatedRate={calculatedRate}
         />
       ) : (
-        <Button themeColor="info" onClick={calculateExchangeRates}>
+        <Button themeColor="info" onClick={calculateCurrencies}>
           Calculate
         </Button>
       )}

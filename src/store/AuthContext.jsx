@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = storage.getToken();
+
     if (token) {
       setUser(token);
     }
@@ -22,16 +23,25 @@ export const AuthProvider = ({ children }) => {
 
       const response = await authentication(values);
 
-      console.log(response);
       if (response) {
         storage.setToken(response.access_token);
+
+        const currentDate = new Date();
+
+        const expirationTimeInSeconds = 5;
+        const expirationTimeInMilliseconds = expirationTimeInSeconds * 1000;
+
+        const expirationDate = new Date(
+          currentDate.valueOf() + expirationTimeInMilliseconds,
+        );
+
+        storage.setExpirationDate(expirationDate);
 
         setUser(response.access_token);
 
         toast.success('Login succesfull');
       }
     } catch (err) {
-      console.log(err);
       toast.error(err);
     } finally {
       setLoading(false);
@@ -41,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     storage.clearToken();
+    storage.clearExpirationDate();
   };
 
   return (

@@ -34,6 +34,7 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
       <Column
         field="nameEn"
         title="Currency Name"
+        sortable={false}
         width={130}
         headerCell={CustomHeader}
       />

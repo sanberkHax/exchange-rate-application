@@ -36,7 +36,7 @@ const Home = () => {
           {data && <ExchangeRateDataGrid exchangeRates={data} />}
         </div>
         <h1 className="text-secondary font-bold text-3xl">
-          Exchange Rate Calculator
+          Currency Calculator
         </h1>
         {data && <CurrencyCalculator exchangeRates={data} />}
       </div>

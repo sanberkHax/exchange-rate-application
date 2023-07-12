@@ -26,20 +26,20 @@ export const ExchangeRateDataGrid = ({ exchangeRates }) => {
       total={3}
     >
       <Column
-        field="currencyId"
+        field="CurrencyId"
         title="Currency ID"
         width={130}
         headerCell={CustomHeader}
       />
       <Column
-        field="nameEn"
+        field="NameEn"
         title="Currency Name"
         sortable={false}
         width={130}
         headerCell={CustomHeader}
       />
       <Column
-        field="midRate"
+        field="MidRate"
         title="Rate"
         filterable={false}
         width={80}

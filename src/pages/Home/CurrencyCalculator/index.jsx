@@ -5,9 +5,11 @@ import { Button } from '@progress/kendo-react-buttons';
 import { CustomItem } from './CustomItem';
 import { CustomValue } from './CustomValue';
 import { CalculationResult } from './CalculationResult';
+import { Error } from '@progress/kendo-react-labels';
 
 export const CurrencyCalculator = ({ exchangeRates = [] }) => {
   const [amount, setAmount] = useState(1);
+  const [amountInputTouched, setAmountInputTouched] = useState(false);
 
   const [calculatedRate, setCalculatedRate] = useState(null);
 
@@ -57,22 +59,28 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
 
   return (
     <div className="flex-col flex gap-6 sm:gap-10 items-center justify-center">
-      <div className="flex-col md:flex-row flex gap-4 md:items-end justify-center">
+      <div className="flex-col md:flex-row flex gap-8 justify-center">
         <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">Amount</h2>
-          <NumericTextBox
-            valid={amount}
-            defaultValue={1}
-            format="n2"
-            min={0}
-            onChange={e => {
-              setAmount(e.value);
-            }}
-            value={amount}
-            style={{
-              width: '200px',
-            }}
-          />
+          <div className="relative">
+            <NumericTextBox
+              valid={amount}
+              onFocus={() => setAmountInputTouched(true)}
+              defaultValue={1}
+              format="n2"
+              min={0}
+              onChange={e => {
+                setAmount(e.value);
+              }}
+              value={amount}
+              style={{
+                width: '200px',
+              }}
+            />
+            {!amount && amountInputTouched && (
+              <Error className="absolute">Amount is invalid</Error>
+            )}
+          </div>
         </div>
         <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">From</h2>
@@ -96,6 +104,7 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
               from: prevValues.to,
             }));
           }}
+          className="mt-auto"
         >
           Switch
         </Button>

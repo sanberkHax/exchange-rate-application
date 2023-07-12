@@ -63,7 +63,7 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
           <NumericTextBox
             valid={amount}
             defaultValue={1}
-            format="n3"
+            format="n2"
             min={0}
             onChange={e => {
               setAmount(e.value);

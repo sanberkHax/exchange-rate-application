@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 export const useFetch = serviceCallback => {
   const [data, setData] = useState([]);
@@ -15,9 +14,7 @@ export const useFetch = serviceCallback => {
 
         setData(response);
       } catch (err) {
-        setError(err);
-
-        toast.error(err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }

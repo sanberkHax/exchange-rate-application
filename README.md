@@ -1,4 +1,5 @@
 # Exchange Rate Application
+A web application that lists exchange rates and lets you calculate currencies.
 
 ## Tech Stack
 - React

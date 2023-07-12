@@ -61,15 +61,12 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
         <div className="flex flex-col sm:gap-4">
           <h2 className="font-bold">Amount</h2>
           <NumericTextBox
+            valid={amount}
             defaultValue={1}
-            format="n2"
-            min={1}
+            format="n3"
+            min={0}
             onChange={e => {
-              if (!e.value) {
-                setAmount(1);
-              } else {
-                setAmount(e.value);
-              }
+              setAmount(e.value);
             }}
             value={amount}
             style={{
@@ -124,7 +121,11 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
           calculatedRate={calculatedRate}
         />
       ) : (
-        <Button themeColor="info" onClick={calculateCurrencies}>
+        <Button
+          themeColor="info"
+          onClick={calculateCurrencies}
+          disabled={!amount}
+        >
           Calculate
         </Button>
       )}

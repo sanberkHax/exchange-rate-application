@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
         const currentDate = new Date();
 
-        const expirationTimeInSeconds = 5;
+        const expirationTimeInSeconds = response.expires_in;
         const expirationTimeInMilliseconds = expirationTimeInSeconds * 1000;
 
         const expirationDate = new Date(

@@ -9,15 +9,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const token = storage.getToken();
-
   useEffect(() => {
+    const token = storage.getToken();
     if (token) {
       setUser(token);
-    } else {
-      setUser(null);
     }
-  }, [token]);
+  }, []);
 
   const login = async values => {
     try {

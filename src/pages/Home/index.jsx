@@ -3,9 +3,10 @@ import { CurrencyCalculator } from './CurrencyCalculator';
 import { useFetch } from '@/hooks/useFetch';
 import { Loader } from '@progress/kendo-react-indicators';
 import { Helmet } from 'react-helmet-async';
+import { getExchangeRateList } from '../../api/getExchangeRateList';
 
 const Home = () => {
-  const { data, error, loading } = useFetch();
+  const { data, error, loading } = useFetch(getExchangeRateList);
 
   if (error) {
     return (

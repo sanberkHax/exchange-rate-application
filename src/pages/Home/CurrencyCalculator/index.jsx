@@ -17,7 +17,7 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
   });
 
   const exchangeRateList = useMemo(
-    () => [...exchangeRates, { currencyId: 1, midRate: 1.0, nameEn: 'TRY' }],
+    () => [...exchangeRates, { CurrencyId: 1, MidRate: 1.0, NameEn: 'TRY' }],
     [exchangeRates],
   );
 
@@ -25,24 +25,24 @@ export const CurrencyCalculator = ({ exchangeRates = [] }) => {
     // Change combobox values based on their type
     setCurrencyValues(prevValues => ({
       ...prevValues,
-      [type]: e.value.nameEn,
+      [type]: e.value.NameEn,
     }));
   };
 
   const calculateCurrencies = useCallback(() => {
     // Find currency that matches with "from" combobox's value
     const fromCurrency = exchangeRateList.find(
-      item => currencyValues.from === item.nameEn,
+      item => currencyValues.from === item.NameEn,
     );
 
     // Find currency that matches with "to" combobox's value
     const toCurrency = exchangeRateList.find(
-      item => currencyValues.to === item.nameEn,
+      item => currencyValues.to === item.NameEn,
     );
 
     // Calculate rate
     if (fromCurrency && toCurrency) {
-      const result = (amount * fromCurrency.midRate) / toCurrency.midRate;
+      const result = (amount * fromCurrency.MidRate) / toCurrency.MidRate;
 
       setCalculatedRate(result);
     }

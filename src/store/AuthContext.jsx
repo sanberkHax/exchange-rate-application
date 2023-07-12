@@ -22,14 +22,16 @@ export const AuthProvider = ({ children }) => {
 
       const response = await authentication(values);
 
+      console.log(response);
       if (response) {
-        storage.setToken(response);
+        storage.setToken(response.access_token);
 
-        setUser(response);
+        setUser(response.access_token);
 
         toast.success('Login succesfull');
       }
     } catch (err) {
+      console.log(err);
       toast.error(err);
     } finally {
       setLoading(false);

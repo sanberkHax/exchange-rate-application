@@ -1,17 +1,14 @@
-// Fake authentication service with 1.5s delay
+import api from '../lib/axios';
 
-export const authentication = credentials => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulate service validation for credentials
-      if (
-        credentials.username !== 'webapi@demosirketi' ||
-        credentials.password !== 'Magnimore123.'
-      ) {
-        reject('Credentials are not valid');
-      } else {
-        resolve('dummy_token');
-      }
-    }, 1500);
-  });
+export const authentication = async credentials => {
+  const response = await api.post(
+    'token',
+    { grant_type: 'password', ...credentials },
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  );
+  return response;
 };

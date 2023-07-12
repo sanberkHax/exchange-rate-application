@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getExchangeRateList } from '@/api/getExchangeRateList';
 import { toast } from 'react-toastify';
 
-export const useFetch = () => {
+export const useFetch = serviceCallback => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +11,7 @@ export const useFetch = () => {
       try {
         setLoading(true);
 
-        const response = await getExchangeRateList();
+        const response = await serviceCallback();
 
         setData(response);
       } catch (err) {
@@ -25,7 +24,7 @@ export const useFetch = () => {
     };
 
     fetchExchangeRates();
-  }, []);
+  }, [serviceCallback]);
 
   return { data, loading, error };
 };

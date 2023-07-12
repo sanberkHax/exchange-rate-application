@@ -6,11 +6,13 @@ export const CustomItem = (li, props) => {
   const itemChildren = (
     <div className="flex gap-4 items-center">
       <ReactCountryFlag
-        title={currencyToCountry[props.dataItem]}
-        countryCode={currencyToCountry[props.dataItem]}
+        title={currencyToCountry[props.dataItem.nameEn]}
+        countryCode={currencyToCountry[props.dataItem.nameEn]}
         svg
       />
-      {li.props.children}
+      <p>{props.dataItem.nameEn}</p>
+      <span>-</span>
+      <p>{props.dataItem.currencyId}</p>
     </div>
   );
   return cloneElement(li, li.props, itemChildren);

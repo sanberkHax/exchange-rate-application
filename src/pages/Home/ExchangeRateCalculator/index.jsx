@@ -21,14 +21,12 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
     [exchangeRates],
   );
 
-  const currencyNames = useMemo(
-    () => exchangeRateList.map(item => item.nameEn),
-    [exchangeRateList],
-  );
-
   const handleChange = (e, type) => {
     // Change combobox values based on their type
-    setCurrencyValues(prevValues => ({ ...prevValues, [type]: e.value }));
+    setCurrencyValues(prevValues => ({
+      ...prevValues,
+      [type]: e.value.nameEn,
+    }));
   };
 
   const calculateExchangeRates = useCallback(() => {
@@ -83,7 +81,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           <h2 className="font-bold">From</h2>
           <ComboBox
             clearButton={false}
-            data={currencyNames}
+            data={exchangeRateList}
             itemRender={CustomItem}
             valueRender={CustomValue}
             value={currencyValues.from}
@@ -108,7 +106,7 @@ export const ExchangeRateCalculator = ({ exchangeRates = [] }) => {
           <h2 className="font-bold">To</h2>
           <ComboBox
             clearButton={false}
-            data={currencyNames}
+            data={exchangeRateList}
             itemRender={CustomItem}
             valueRender={CustomValue}
             value={currencyValues.to}
